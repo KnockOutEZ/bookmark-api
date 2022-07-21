@@ -1,1 +1,7 @@
+NESTJS COMMANDS
 nest g module "module name" => for creating new module
+
+DOCKER COMMANDS
+docker ps => to see running containers
+docker compose up "db name" -d => for creating a new database using docker
+docker logs "container ID" => to see logs of that docker container
