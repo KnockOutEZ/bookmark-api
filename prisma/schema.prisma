@@ -1,0 +1,36 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// SCHEMA
+// Define the `User` table in the database
+model User {
+  // basic fields for all models
+  id         Int      @id @default(autoincrement()) //we could also use cuid() in @default()
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  email      String @unique
+  hashedPass String
+
+  full_name String?
+  user_name String
+}
+
+model Bookmark {
+  id         Int      @id @default(autoincrement())
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  title      String
+  desciption String?
+  link       String
+}

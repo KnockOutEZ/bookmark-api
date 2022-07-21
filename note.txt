@@ -1,7 +1,18 @@
 NESTJS COMMANDS
 nest g module "module name" => for creating new module
+nest g service "service name" --no-spec => for creating new service without a test file
 
 DOCKER COMMANDS
 docker ps => to see running containers
 docker compose up "db name" -d => for creating a new database using docker
 docker logs "container ID" => to see logs of that docker container
+
+PRISMA
+install prisma and @prisma/client with yarn
+npx prisma init => initialize prisma for nestjs
+npx prisma migrate dev => creates migrations(tables and fields) for development based on the schema in schema.prisma file
+npx prisma generate => creates typescript types to directly import and use the schemas in our code(services)
+npx prisma studio => lets us see our database visually in browser
+
+
+
