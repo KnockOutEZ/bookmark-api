@@ -2,8 +2,9 @@
 
 // Controllers are mainly used for handling requests and routing
 
-import { Controller, Post } from '@nestjs/common';
+import { Body, Controller, ParseIntPipe, Post } from '@nestjs/common';
 import { AuthService } from './auth.services';
+import { AuthDto } from './dto';
 
 // the 'auth' here means the root path of the endpoint
 @Controller('auth')
@@ -17,14 +18,30 @@ export class AuthController {
   // }
 
   constructor(private authService: AuthService) {}
-  // the 'signup' means the path after auth. like "/auth/signup" in endpoint
 
+  // the 'signup' means the path after auth. like "/auth/signup" in endpoint
   @Post('signup')
-  signup() {
-    this.authService.signup
+  signup(
+    @Body() dto:AuthDto
+
+    // We can use pipes like this for validation
+    // @Body('email') email:string,
+    // @Body('password') password:ParseIntPipe
+    ) {
+    // This is how we get the pipe data
+    // console.log({
+    //   email,
+    //   typeOfEmail: typeof email,
+    //   password,
+    //   typeOfPassword: typeof password
+    // })
+
+    console.log({dto})
+    return(this.authService.signup(dto))
   }
+
   @Post('signin')
-  signin() {
+  signin(@Body() dto:AuthDto) {
     this.authService.signup
   }
 }
