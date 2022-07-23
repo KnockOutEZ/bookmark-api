@@ -5,6 +5,7 @@ import { AuthModule } from './auth/auth.module';
 import { BookmarkModule } from './bookmark/bookmark.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { ConfigModule } from '@nestjs/config';
+import { OAuthModule } from './o-auth/o-auth.module';
 
 @Module({
   imports: [
@@ -14,7 +15,8 @@ import { ConfigModule } from '@nestjs/config';
     UserModule,
     AuthModule,
     BookmarkModule,
-    PrismaModule
+    PrismaModule,
+    OAuthModule
   ],
 })
 export class AppModule {}

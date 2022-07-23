@@ -16,5 +16,7 @@ npx prisma migrate deploy => applies the migrations to the database
 npx prisma generate => creates typescript types to directly import and use the schemas in our code(services)
 npx prisma studio => lets us see our database visually in browser
 
-
+Google oAuth
+localhost:3000/google => to login with google
+https://www.googleapis.com/oauth2/v1/tokeninfo?access_token={access_token} => to check if the access token is valid
 
