@@ -22,7 +22,7 @@ model User {
   hashedPass String
 
   full_name String?
-  user_name String
+  user_name String?
 
   // renames the table in db
   @@map("users")
