@@ -6,11 +6,17 @@ import { User, Bookmark } from '@prisma/client';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { AuthDto } from './dto';
+import { JwtService } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
 import * as argon from 'argon2';
 
 @Injectable({})
 export class AuthService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private jwt: JwtService,
+    private config: ConfigService,
+  ) {}
 
   async signup(dto: AuthDto) {
     // hash the password
@@ -37,7 +43,7 @@ export class AuthService {
       delete user.hashedPass;
 
       // return saved user
-      return user;
+      return this.signToken(user.id, user.email);
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         if (error.code === 'P2002') {
@@ -46,7 +52,7 @@ export class AuthService {
           );
         }
       }
-      throw `${error} nigga`;
+      throw `${error}`;
     }
   }
 
@@ -73,6 +79,31 @@ export class AuthService {
 
     // send the user data to frontend without password
     delete user.hashedPass;
-    return user;
+    // return user;
+
+    // sending the jwt token to frontend;
+    return this.signToken(user.id, user.email);
+  }
+
+  // jwt functionality
+  async signToken(
+    userId: number,
+    email: string,
+  ): Promise<{access_token:string}> {
+    const payload = {
+      sub: userId,
+      email,
+    };
+
+    const secret = this.config.get('JWT_SECRET');
+
+    const token = await this.jwt.signAsync(payload, {
+      expiresIn: '15m',
+      secret: secret,
+    });
+
+    return {
+      access_token: token,
+    };
   }
 }

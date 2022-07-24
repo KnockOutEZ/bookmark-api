@@ -1,12 +1,13 @@
 /* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
-import { PrismaModule } from 'src/prisma/prisma.module';
+import { JwtModule } from '@nestjs/jwt';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.services';
+import { JwtStrategy } from './strategy';
 
 @Module({
-  // import:[PrismaModule],
+  imports:[JwtModule.register({})],
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [AuthService,JwtStrategy],
 })
 export class AuthModule {}
