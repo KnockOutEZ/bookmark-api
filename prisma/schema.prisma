@@ -24,11 +24,11 @@ model User {
   full_name String?
   user_name String?
 
-  // renames the table in db
-  @@map("users")
-
   // getting connectiong to the relation to bookmark
   bookmarks Bookmark[]
+
+  // renames the table in db
+  @@map("users")
 }
 
 model Bookmark {
@@ -36,13 +36,13 @@ model Bookmark {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  title      String
+  title      String  @unique
   desciption String?
   link       String
 
-  @@map("bookmarks")
-
   // many to one relation
   userID Int
-  user User @relation(fields: [userID],references: [id])
+  user   User @relation(fields: [userID], references: [id])
+
+  @@map("bookmarks")
 }

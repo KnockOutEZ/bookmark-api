@@ -1,16 +1,3 @@
-/*
-  Warnings:
-
-  - You are about to drop the `Bookmark` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `User` table. If the table is not empty, all the data it contains will be lost.
-
-*/
--- DropTable
-DROP TABLE "Bookmark";
-
--- DropTable
-DROP TABLE "User";
-
 -- CreateTable
 CREATE TABLE "users" (
     "id" SERIAL NOT NULL,
@@ -19,7 +6,7 @@ CREATE TABLE "users" (
     "email" TEXT NOT NULL,
     "hashedPass" TEXT NOT NULL,
     "full_name" TEXT,
-    "user_name" TEXT NOT NULL,
+    "user_name" TEXT,
 
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
 );
@@ -39,6 +26,9 @@ CREATE TABLE "bookmarks" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "bookmarks_title_key" ON "bookmarks"("title");
 
 -- AddForeignKey
 ALTER TABLE "bookmarks" ADD CONSTRAINT "bookmarks_userID_fkey" FOREIGN KEY ("userID") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
